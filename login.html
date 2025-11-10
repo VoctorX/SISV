@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Acceso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
+    <script src="assets/js/login.js" defer></script> 
+</head>
+<body class="bg-slate-900 text-slate-300 flex items-center justify-center min-h-screen font-sans">
+
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl font-bold text-white tracking-tight">Bienvenido</h1>
+            <p class="text-slate-400">Accede para gestionar tus tareas</p>
+        </div>
+
+        <div id="loginForm" class="bg-slate-800/60 backdrop-blur-sm p-8 rounded-2xl shadow-2xl shadow-slate-950/50 transition-all duration-300">
+            <form action="#" method="POST" onsubmit="return false;">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-sm font-medium text-slate-400 mb-2">Correo Electrónico</label>
+                    <input type="email" id="login-email" name="email" placeholder="tu@correo.com" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-medium text-slate-400 mb-2">Contraseña</label>
+                    <input type="password" id="login-password" name="password" placeholder="••••••••" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                </div>
+                <div class="g-recaptcha flex justify-center mb-6" data-sitekey="6LeFAQQsAAAAAC3cahd2ORpygctn4lqPIm9cUXbD" data-theme="dark"></div>
+                <input type="submit" value="Entrar" class="w-full bg-indigo-600 text-white font-bold py-2.5 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-indigo-500 cursor-pointer transition-colors">
+            </form>
+            <p class="text-center text-sm text-slate-400 mt-6">¿No tienes cuenta? <a href="#" onclick="showSignup(event)" class="font-medium text-indigo-400 hover:text-indigo-300">Regístrate</a></p>
+        </div>
+
+        <div id="signupForm" style="display: none;" class="bg-slate-800/60 backdrop-blur-sm p-8 rounded-2xl shadow-2xl shadow-slate-950/50 transition-all duration-300">
+            <form action="#" method="POST" onsubmit="return false;">
+                <div class="mb-4">
+                    <label for="signup-name" class="block text-sm font-medium text-slate-400 mb-2">Nombre</label>
+                    <input type="text" id="signup-name" name="name" placeholder="Tu nombre" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                </div>
+                <div class="mb-4">
+                    <label for="signup-email" class="block text-sm font-medium text-slate-400 mb-2">Correo Electrónico</label>
+                    <input type="email" id="signup-email" name="email" placeholder="tu@correo.com" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                </div>
+                <div class="mb-6">
+                    <label for="signup-password" class="block text-sm font-medium text-slate-400 mb-2">Contraseña</slabel>
+                    <input type="password" id="signup-password" name="password" placeholder="Crea una contraseña segura" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                </div>
+                <input type="submit" value="Crear Cuenta" class="w-full bg-violet-600 text-white font-bold py-2.5 px-4 rounded-lg hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-violet-500 cursor-pointer transition-colors">
+            </form>
+            <p class="text-center text-sm text-slate-400 mt-6">¿Ya tienes cuenta? <a href="#" onclick="showLogin(event)" class="font-medium text-indigo-400 hover:text-indigo-300">Inicia sesión</a></p>
+        </div>
+    </div>
+</body>
+</html>

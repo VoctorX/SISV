@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISV Dashboard - Victor Cordoba</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="assets/js/dashboard.js" asycn defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body class="bg-white font-sans overflow-hidden">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-48 bg-blue-50 p-4 flex flex-col items-center flex-shrink-0">
+            <div class="w-20 h-20 bg-white rounded-full border-2 border-gray-400 flex items-center justify-center mb-2">
+                <svg class="w-12 h-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+            </div>
+            <p id="userNameSidebar" class="text-sm font-semibold text-gray-800 mb-4">Usuario</p>
+            <button class="bg-gray-800 text-white px-4 py-2 rounded text-xs mb-8 hover:bg-gray-700 transition">Cambiar datos</button>
+            
+            <nav class="w-full space-y-4">
+                <a href="#" class="flex items-center space-x-2 text-gray-700 hover:bg-blue-100 p-2 rounded transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    <span class="text-sm">Página Principal</span>
+                </a>
+                <a href="#" class="flex items-center space-x-2 text-gray-700 hover:bg-blue-100 p-2 rounded transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    <span class="text-sm">Reportes</span>
+                </a>
+                <a href="#" onclick="logout(event)" class="flex items-center space-x-2 text-gray-700 hover:bg-blue-100 p-2 rounded transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                    <span class="text-sm">Cerrar Sesión</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-auto">
+            <div class="flex justify-between items-center mb-8">
+                <h1 id="welcomeMessage" class="text-3xl font-light text-gray-800">Bienvenido</h1>
+                <div class="relative">
+                    <input type="text" placeholder="🔍 ID Accidente" class="bg-blue-50 px-4 py-2 rounded-lg text-sm w-64 border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                </div>
+            </div>
+
+            <div class="flex gap-6 max-w-7xl">
+                <!-- Left Column: Graph and Stats -->
+                <div class="flex-1 space-y-4">
+                    <!-- Graph Card -->
+                    <div class="bg-blue-900 rounded-lg p-6 shadow-lg">
+                        <div style="height: 280px;">
+                            <canvas id="accidentChart"></canvas>
+                        </div>
+                        <p class="text-white text-sm mt-4">Siniestros Viales en Caldas 2024</p>
+                    </div>
+
+                    <!-- Statistics Cards -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-blue-900 rounded-lg p-6 shadow-lg hover:shadow-xl transition cursor-pointer">
+                            <p class="text-5xl font-bold text-white">925</p>
+                            <p class="text-white text-sm mt-2">Total víctimas 2024</p>
+                        </div>
+                        <div class="bg-blue-900 rounded-lg p-6 shadow-lg hover:shadow-xl transition cursor-pointer">
+                            <p class="text-5xl font-bold text-white">161</p>
+                            <p class="text-white text-sm mt-2">Fallecidos 2024</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Incidents List -->
+                <div class="w-96 bg-blue-50 rounded-lg p-6 shadow-lg flex-shrink-0">
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">Incidentes Recientes</h2>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded transition cursor-pointer">
+                            <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">Volcamiento - 24/08/2025</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded transition cursor-pointer">
+                            <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">Incendio estructural - 23/08/2025</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded transition cursor-pointer">
+                            <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">Corte Árbol - 23/08/2025</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded transition cursor-pointer">
+                            <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">Incendio Forestal - 21/08/2025</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded transition cursor-pointer">
+                            <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">Malpel Estructural - 19/08/2025</span>
+                        </div>
+                        <div class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded transition cursor-pointer">
+                            <svg class="w-6 h-6 text-yellow-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="text-sm">Choque múltiple - 18/08/2025</span>
+                        </div>
+                    </div>
+                    <a href="#" class="text-sm text-blue-700 hover:underline mt-4 inline-block font-semibold">Ver todos los accidentes...</a>
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>
+</html>
