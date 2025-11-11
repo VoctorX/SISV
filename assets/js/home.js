@@ -51,9 +51,31 @@ map.on('click', function(e) {
         Coordenadas: ${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}<br>
         <button class="mt-2 w-full bg-indigo-600 text-white text-sm py-1 px-2 rounded hover:bg-indigo-700">Registrar Incidente</button>
     `;
+    // Crear el contenido del popup como elementos del DOM
+    const popupContainer = document.createElement('div');
+    popupContainer.innerHTML = `<b>Nuevo Incidente</b><br>Coordenadas: ${e.latlng.lat.toFixed(5)}, ${e.latlng.lng.toFixed(5)}`;
+
+    const registerButton = document.createElement('button');
+    registerButton.className = 'mt-2 w-full bg-indigo-600 text-white text-sm py-1 px-2 rounded hover:bg-indigo-700';
+    registerButton.textContent = 'Registrar Incidente';
+    // Aquí puedes añadir la lógica para el botón de registrar
+
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'mt-1 w-full bg-red-600 text-white text-sm py-1 px-2 rounded hover:bg-red-700';
+    deleteButton.textContent = 'Eliminar Pin';
+
+    popupContainer.appendChild(registerButton);
+    popupContainer.appendChild(deleteButton);
 
     // Crear y añadir el nuevo marcador en la ubicación del clic
     L.marker(e.latlng).addTo(map)
         .bindPopup(popupContent)
+    const marker = L.marker(e.latlng).addTo(map)
+        .bindPopup(popupContainer)
         .openPopup();
+
+    // Añadir evento de clic al botón de eliminar
+    deleteButton.addEventListener('click', () => {
+        map.removeLayer(marker);
+    });
 });
