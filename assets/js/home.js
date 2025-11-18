@@ -81,8 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const pingForm = document.getElementById('ping-form');
         const cancelPingButton = document.getElementById('cancel-ping');
 
-        pingForm.addEventListener('submit', (e) => {
+        pingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            const ubicacionDisplay = await reverseGeocode(newPingLatLng.lat, newPingLatLng.lng);
 
             const reportData = {
                 id: Date.now(),
@@ -90,9 +92,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 nombre: document.getElementById('ping-nombre').value,
                 fecha: document.getElementById('ping-fecha').value,
                 hora: document.getElementById('ping-hora').value,
-                ubicacion_str: `${newPingLatLng.lat.toFixed(5)}, ${newPingLatLng.lng.toFixed(5)}`, // Store string for display
+                ubicacion_str: ubicacionDisplay, // Store human-readable string
                 descripcion: document.getElementById('ping-descripcion').value,
                 codigoUsuario: document.getElementById('ping-codigo-usuario').value,
+                userName: user.nombres, // Add user's name
+                userRole: user.userType, // Add user's role
                 lat: newPingLatLng.lat,
                 lng: newPingLatLng.lng
             };
@@ -161,6 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ubicacion_str: ubicacionStr,
                 descripcion: document.getElementById('report-descripcion').value,
                 codigoUsuario: document.getElementById('report-codigo-usuario').value,
+                userName: user.nombres, // Add user's name
+                userRole: user.userType, // Add user's role
                 lat: lat,
                 lng: lng
             };
@@ -264,6 +270,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- DATA PERSISTENCE FUNCTIONS ---
+
+    async function reverseGeocode(lat, lng) {
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`);
+            const data = await response.json();
+            if (data && data.display_name) {
+                return data.display_name;
+            }
+            return `${lat.toFixed(5)}, ${lng.toFixed(5)}`; // Fallback to coordinates
+        } catch (error) {
+            console.error('Error during reverse geocoding:', error);
+            return `${lat.toFixed(5)}, ${lng.toFixed(5)}`; // Fallback to coordinates on error
+        }
+    }
 
     function saveReport(reportData) {
         const reports = JSON.parse(localStorage.getItem('reports')) || [];
