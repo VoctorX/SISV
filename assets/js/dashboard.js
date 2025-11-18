@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Si hay un usuario, parseamos sus datos y actualizamos la interfaz.
     const user = JSON.parse(loggedInUser);
-    const userName = user.name; // Asumimos que el objeto de usuario tiene una propiedad 'name'.
+    const userName = user.nombres; // Asumimos que el objeto de usuario tiene una propiedad 'name'.
 
     // Actualizamos los elementos del DOM con el nombre del usuario.
     document.getElementById('userNameSidebar').textContent = userName;

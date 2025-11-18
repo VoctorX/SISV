@@ -13,7 +13,7 @@
     <div class="w-full max-w-sm">
         <div class="text-center mb-10">
             <h1 class="text-4xl font-bold text-white tracking-tight">Bienvenido</h1>
-            <p class="text-slate-400">Accede para gestionar tus tareas</p>
+            <p class="text-slate-400">Accede para ingresar al SISV</p>
         </div>
 
         <div id="loginForm" class="bg-slate-800/60 backdrop-blur-sm p-8 rounded-2xl shadow-2xl shadow-slate-950/50 transition-all duration-300">
@@ -46,6 +46,46 @@
                     <label for="signup-password" class="block text-sm font-medium text-slate-400 mb-2">Contraseña</slabel>
                     <input type="password" id="signup-password" name="password" placeholder="Crea una contraseña segura" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
                 </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-slate-400 mb-2">Tipo de Usuario</label>
+                    <div class="flex items-center space-x-4">
+                        <label for="userType-externo" class="flex items-center text-slate-300">
+                            <input type="radio" id="userType-externo" name="userType" value="externo" checked class="form-radio h-4 w-4 text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                            <span class="ml-2">Externo</span>
+                        </label>
+                        <label for="userType-operador" class="flex items-center text-slate-300">
+                            <input type="radio" id="userType-operador" name="userType" value="operador" class="form-radio h-4 w-4 text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                            <span class="ml-2">Operador</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Campos adicionales para el rol de Operador -->
+                <div id="operator-fields" style="display: none;" class="space-y-4 mb-6">
+                    <div class="mb-4">
+                        <label for="signup-codigo-interno" class="block text-sm font-medium text-slate-400 mb-2">Código Interno</label>
+                        <input type="text" id="signup-codigo-interno" name="codigo-interno" placeholder="Tu código interno" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="signup-sexo" class="block text-sm font-medium text-slate-400 mb-2">Sexo</label>
+                            <input type="text" id="signup-sexo" name="sexo" placeholder="Masculino/Femenino" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                        </div>
+                        <div>
+                            <label for="signup-edad" class="block text-sm font-medium text-slate-400 mb-2">Edad</label>
+                            <input type="number" id="signup-edad" name="edad" placeholder="Tu edad" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="signup-idcargo" class="block text-sm font-medium text-slate-400 mb-2">Cargo</label>
+                        <select id="signup-idcargo" name="idcargo" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                            <option value="1">Jefe Operador</option>
+                            <option value="2">Maquinista</option>
+                            <option value="3">Ambulancia</option>
+                        </select>
+                    </div>
+                </div>
+
                 <input type="submit" value="Crear Cuenta" class="w-full bg-violet-600 text-white font-bold py-2.5 px-4 rounded-lg hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-violet-500 cursor-pointer transition-colors">
             </form>
             <p class="text-center text-sm text-slate-400 mt-6">¿Ya tienes cuenta? <a href="#" onclick="showLogin(event)" class="font-medium text-indigo-400 hover:text-indigo-300">Inicia sesión</a></p>
