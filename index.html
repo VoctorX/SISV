@@ -5,42 +5,14 @@
     <meta http-equiv="refresh" content="0; url=login.html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISV - Redirigiendo...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         window.location.href = 'login.html';
     </script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            font-family: system-ui, -apple-system, sans-serif;
-            background: #0f172a;
-            color: #fff;
-        }
-        .loader {
-            text-align: center;
-        }
-        .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid #6366f1;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 </head>
-<body>
-    <div class="loader">
-        <div class="spinner"></div>
+<body class="flex items-center justify-center min-h-screen font-sans bg-slate-900 text-white">
+    <div class="text-center">
+        <div class="inline-block border-3 border-solid border-white border-opacity-10 border-t-indigo-500 rounded-full w-10 h-10 animate-spin mb-4"></div>
         <p>Redirigiendo al sistema...</p>
     </div>
 </body>

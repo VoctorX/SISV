@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- MAP AND REPORT LOGIC ---
 
     function initMap() {
-        const map = L.map('map', { zoomControl: false }).setView([6.2442, -75.5812], 14.5);
+        const map = L.map('map', { zoomControl: false }).setView([6.099, -75.6367], 14.5);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 20,

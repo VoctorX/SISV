@@ -4,9 +4,8 @@
 // For a real application, use a secure backend with password hashing (e.g., bcrypt).
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- INITIAL FORM STATE ---
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('signupForm').classList.add('hidden');
 
     // --- DOM ELEMENT REFERENCES ---
     const signupFormElement = document.querySelector('#signupForm form');
@@ -20,9 +19,9 @@ document.addEventListener('DOMContentLoaded', () => {
     userTypeRadios.forEach(radio => {
         radio.addEventListener('change', (event) => {
             if (event.target.value === 'operador') {
-                operatorFields.style.display = 'block';
+                operatorFields.classList.remove('hidden');
             } else {
-                operatorFields.style.display = 'none';
+                operatorFields.classList.add('hidden');
             }
         });
     });
