@@ -120,6 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         generateReportBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            if (user.userType === 'externo') {
+                alert('No tienes permiso para generar reportes.');
+                return;
+            }
             document.getElementById('report-codigo-usuario').value = user.codigo_interno || 'N/A';
             reportFormModal.classList.remove('hidden');
         });
