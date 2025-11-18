@@ -8,7 +8,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
     <script src="assets/js/login.js" defer></script> 
 </head>
-<body class="bg-slate-900 text-slate-300 flex items-center justify-center min-h-screen font-sans">
+<body class="bg-gray-700 text-slate-300 flex items-center justify-center min-h-screen font-sans">
 
     <div class="w-full max-w-sm">
         <div class="text-center mb-10">
@@ -20,14 +20,14 @@
             <form action="#" method="POST" onsubmit="return false;">
                 <div class="mb-4">
                     <label for="login-email" class="block text-sm font-medium text-slate-400 mb-2">Correo Electrónico</label>
-                    <input type="email" id="login-email" name="email" placeholder="tu@correo.com" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="email" id="login-email" name="email" placeholder="tu@correo.com" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                 </div>
                 <div class="mb-6">
                     <label for="login-password" class="block text-sm font-medium text-slate-400 mb-2">Contraseña</label>
-                    <input type="password" id="login-password" name="password" placeholder="••••••••" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                    <input type="password" id="login-password" name="password" placeholder="••••••••" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                 </div>
                 <div class="g-recaptcha flex justify-center mb-6" data-sitekey="6LeFAQQsAAAAAC3cahd2ORpygctn4lqPIm9cUXbD" data-theme="dark"></div>
-                <input type="submit" value="Entrar" class="w-full bg-indigo-600 text-white font-bold py-2.5 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-indigo-500 cursor-pointer transition-colors">
+                <input type="submit" value="Entrar" class="w-full bg-gray-600 text-white font-bold py-2.5 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-gray-500 cursor-pointer transition-colors">
             </form>
             <p class="text-center text-sm text-slate-400 mt-6">¿No tienes cuenta? <a href="#" onclick="showSignup(event)" class="font-medium text-indigo-400 hover:text-indigo-300">Regístrate</a></p>
         </div>
@@ -36,29 +36,29 @@
             <form action="#" method="POST" onsubmit="return false;">
                 <div class="mb-4">
                     <label for="signup-name" class="block text-sm font-medium text-slate-400 mb-2">Nombre</label>
-                    <input type="text" id="signup-name" name="name" placeholder="Tu nombre" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                    <input type="text" id="signup-name" name="name" placeholder="Tu nombre" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                 </div>
                 <div class="mb-4">
-                    <label for="signup-id" class="block text-sm font-medium text-slate-400 mb-2">Cédula</label>
-                    <input type="text" id="signup-id" name="id" placeholder="Tu número de cédula" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                    <label for="signup-id" class="block text-sm font-medium text-slate-400 mb-2">Cedula</label>
+                    <input type="text" id="signup-id" name="id" placeholder="Tu número de cédula" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                 </div>
                 <div class="mb-4">
                     <label for="signup-email" class="block text-sm font-medium text-slate-400 mb-2">Correo Electrónico</label>
-                    <input type="email" id="signup-email" name="email" placeholder="tu@correo.com" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                    <input type="email" id="signup-email" name="email" placeholder="tu@correo.com" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                 </div>
                 <div class="mb-6">
                     <label for="signup-password" class="block text-sm font-medium text-slate-400 mb-2">Contraseña</slabel>
-                    <input type="password" id="signup-password" name="password" placeholder="Crea una contraseña segura" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                    <input type="password" id="signup-password" name="password" placeholder="Crea una contraseña segura" required class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                 </div>
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-slate-400 mb-2">Tipo de Usuario</label>
                     <div class="flex items-center space-x-4">
                         <label for="userType-externo" class="flex items-center text-slate-300">
-                            <input type="radio" id="userType-externo" name="userType" value="externo" checked class="form-radio h-4 w-4 text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                            <input type="radio" id="userType-externo" name="userType" value="externo" checked class="form-radio h-4 w-4 text-gray-600 bg-slate-700 border-slate-600 focus:ring-gray-500">
                             <span class="ml-2">Externo</span>
                         </label>
                         <label for="userType-operador" class="flex items-center text-slate-300">
-                            <input type="radio" id="userType-operador" name="userType" value="operador" class="form-radio h-4 w-4 text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                            <input type="radio" id="userType-operador" name="userType" value="operador" class="form-radio h-4 w-4 text-gray-600 bg-slate-700 border-slate-600 focus:ring-gray-500">
                             <span class="ml-2">Operador</span>
                         </label>
                     </div>
@@ -68,21 +68,21 @@
                 <div id="operator-fields" class="hidden space-y-4 mb-6">
                     <div class="mb-4">
                         <label for="signup-codigo-interno" class="block text-sm font-medium text-slate-400 mb-2">Código Interno</label>
-                        <input type="text" id="signup-codigo-interno" name="codigo-interno" placeholder="Tu código interno" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                        <input type="text" id="signup-codigo-interno" name="codigo-interno" placeholder="Tu código interno" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label for="signup-sexo" class="block text-sm font-medium text-slate-400 mb-2">Sexo</label>
-                            <input type="text" id="signup-sexo" name="sexo" placeholder="Masculino/Femenino" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                            <input type="text" id="signup-sexo" name="sexo" placeholder="Masculino/Femenino" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                         </div>
                         <div>
                             <label for="signup-edad" class="block text-sm font-medium text-slate-400 mb-2">Edad</label>
-                            <input type="number" id="signup-edad" name="edad" placeholder="Tu edad" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                            <input type="number" id="signup-edad" name="edad" placeholder="Tu edad" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                         </div>
                     </div>
                     <div class="mb-4">
                         <label for="signup-idcargo" class="block text-sm font-medium text-slate-400 mb-2">Cargo</label>
-                        <select id="signup-idcargo" name="idcargo" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500">
+                        <select id="signup-idcargo" name="idcargo" class="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500">
                             <option value="1">Jefe Operador</option>
                             <option value="2">Maquinista</option>
                             <option value="3">Ambulancia</option>
@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <input type="submit" value="Crear Cuenta" class="w-full bg-violet-600 text-white font-bold py-2.5 px-4 rounded-lg hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-violet-500 cursor-pointer transition-colors">
+                <input type="submit" value="Crear Cuenta" class="w-full bg-gray-600 text-white font-bold py-2.5 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-violet-500 cursor-pointer transition-colors">
             </form>
             <p class="text-center text-sm text-slate-400 mt-6">¿Ya tienes cuenta? <a href="#" onclick="showLogin(event)" class="font-medium text-indigo-400 hover:text-indigo-300">Inicia sesión</a></p>
         </div>
