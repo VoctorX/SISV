@@ -31,19 +31,20 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
 
         const name = document.getElementById('signup-name').value.trim();
+        const id = document.getElementById('signup-id').value.trim(); // Get cedula value
         const email = document.getElementById('signup-email').value.trim();
         const password = document.getElementById('signup-password').value.trim();
 
-        if (!email || !password || !name) {
+        if (!email || !password || !name || !id) { // Add cedula to validation
             alert('Por favor, completa todos los campos para registrarte.');
             return;
         }
 
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        const userExists = users.some(user => user.email === email);
+        const userExists = users.some(user => user.email === email || user.id === id); // Check for existing cedula
 
         if (userExists) {
-            alert('Este correo electrónico ya está registrado. Por favor, inicia sesión.');
+            alert('Este correo electrónico o cédula ya está registrado. Por favor, inicia sesión.');
             return;
         }
 
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Create a base user object
         const newUser = {
-            id: `user_${Date.now()}`,
+            id: id, // Use cedula as the ID
             nombres: name,
             apellidos: '',
             email: email,
