@@ -6,23 +6,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    // --- ANIMACIÓN DE ENTRADA ---
-    const profileCard = document.getElementById('profile-card');
-    profileCard.classList.add('animate-fade-in-slide-up');
-
-    // --- OBTENER Y MOSTRAR DATOS DEL USUARIO ---
+    // --- ELEMENTOS CLAVE Y DATOS DEL USUARIO ---
     const user = JSON.parse(loggedInUser);
 
-    // --- ACTUALIZAR TÍTULO DINÁMICAMENTE ---
+    // 1. Elementos del DOM
+    const profileCard = document.getElementById('profile-card');
     const profileTitle = document.getElementById('profile-title');
-    if (user.userType === 'operador') {
-        profileTitle.textContent = 'Perfil de Operador';
-    } else if (user.userType === 'externo') {
-        profileTitle.textContent = 'Perfil de Externo';
-    }
-    // Si no tiene tipo, se queda el título por defecto "Perfil de Usuario".
+    const panelOperador = document.getElementById('panel-operador');
+    const tabPerfil = document.getElementById('tab-perfil');
+    const tabOperador = document.getElementById('tab-operador');
+    const panelPerfil = document.getElementById('panel-perfil');
+    const saveButton = document.getElementById('save-button');
+    const logoutButton = document.getElementById('logout-button');
     
-    // Campos comunes
+    // 2. Campos comunes
     const idInput = document.getElementById('user-id');
     const nombresInput = document.getElementById('user-nombres');
     const apellidosInput = document.getElementById('user-apellidos');
@@ -30,15 +27,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const celularInput = document.getElementById('user-celular');
     const nitInput = document.getElementById('user-nit');
 
-    // Campos de operador
-    const panelOperador = document.getElementById('panel-operador');
+    // 3. Campos de operador
     const codigoInternoInput = document.getElementById('user-codigo-interno');
     const sexoInput = document.getElementById('user-sexo');
     const edadInput = document.getElementById('user-edad');
     const idCargoInput = document.getElementById('user-idcargo');
 
+    // --- INICIALIZACIÓN Y ANIMACIÓN ---
+    profileCard.classList.add('animate-fade-in-slide-up');
+
+    // --- ACTUALIZAR TÍTULO DINÁMICAMENTE ---
+    if (user.userType === 'operador') {
+        profileTitle.textContent = 'Perfil de Operador';
+    } else if (user.userType === 'externo') {
+        profileTitle.textContent = 'Perfil de Externo';
+    } else {
+        profileTitle.textContent = 'Perfil de Usuario';
+    }
+    
     // Rellenar campos comunes
-    idInput.value = user.id || 'No asignado'; // Muestra el ID o un texto por defecto
+    idInput.value = user.id || 'No asignado';
     nombresInput.value = user.nombres || '';
     apellidosInput.value = user.apellidos || '';
     emailInput.value = user.email || ''; 
@@ -47,32 +55,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LÓGICA DE VISIBILIDAD POR TIPO DE USUARIO ---
     if (user.userType === 'operador') {
-        // 1. Mostrar la pestaña y el panel de operador
-        document.getElementById('tab-operador').classList.remove('hidden');
+        tabOperador.classList.remove('hidden');
         
-        // 2. Rellenar sus campos específicos
+        // Rellenar campos específicos de operador
         codigoInternoInput.value = user.codigo_interno || '';
         sexoInput.value = user.sexo || '';
         edadInput.value = user.edad || '';
         idCargoInput.value = user.idcargo || '';
     }
 
+    // ------------------------------------------------------------------
+    
     // --- LÓGICA DE PESTAÑAS (TABS) ---
-    const tabPerfil = document.getElementById('tab-perfil');
-    const tabOperador = document.getElementById('tab-operador');
-    const panelPerfil = document.getElementById('panel-perfil');
-
     const setActiveTab = (activeTab, activePanel) => {
+        // Clases para la pestaña activa (grises)
+        const activeClasses = ['border-gray-700', 'text-gray-800'];
+        const inactiveClasses = ['border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-400'];
+
         // Resetear todos
         [tabPerfil, tabOperador].forEach(tab => {
-            tab.classList.remove('border-black', 'text-black');
-            tab.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+            tab.classList.remove(...activeClasses);
+            tab.classList.add(...inactiveClasses);
         });
         [panelPerfil, panelOperador].forEach(panel => panel.classList.add('hidden'));
 
         // Activar el seleccionado
-        activeTab.classList.add('border-black', 'text-black');
-        activeTab.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+        activeTab.classList.add(...activeClasses);
+        activeTab.classList.remove(...inactiveClasses);
         activePanel.classList.remove('hidden');
     };
 
@@ -88,24 +97,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ------------------------------------------------------------------
+
     // --- LÓGICA PARA GUARDAR CAMBIOS ---
-    const saveButton = document.getElementById('save-button');
     saveButton.addEventListener('click', () => {
-        // Guardar el texto original del botón
         const originalButtonText = saveButton.textContent;
         saveButton.textContent = 'Guardando...';
         saveButton.disabled = true;
 
         // 1. Actualizar el objeto de usuario con los nuevos valores
         let updatedUser = {
-            ...user, // Copia todas las propiedades existentes (como email y password)
+            ...user, 
             nombres: nombresInput.value.trim(),
             apellidos: apellidosInput.value.trim(),
             celular: celularInput.value.trim(),
             nit: nitInput.value.trim()
         };
 
-        // Si es operador, también guarda sus campos específicos
         if (user.userType === 'operador') {
             updatedUser.codigo_interno = codigoInternoInput.value.trim();
             updatedUser.sexo = sexoInput.value.trim();
@@ -113,10 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
             updatedUser.idcargo = idCargoInput.value.trim();
         }
 
-        // 2. Actualizar la lista de usuarios en localStorage
+        // 2. Actualizar la lista de usuarios en localStorage (Persistencia de datos)
         let users = JSON.parse(localStorage.getItem('users')) || [];
-        // Se busca al usuario por su ID único para garantizar que actualizamos el correcto.
-        // El ID no es editable y fue asignado durante el registro.
         const userIndex = users.findIndex(u => u.id === user.id);
         if (userIndex !== -1) {
             users[userIndex] = updatedUser;
@@ -129,46 +135,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mostrar mensaje de éxito y restaurar el botón
         setTimeout(() => {
             saveButton.textContent = '¡Guardado!';
+            saveButton.classList.remove('bg-gray-700', 'shadow-gray-300');
+            saveButton.classList.add('bg-gray-600', 'shadow-gray-200'); 
             setTimeout(() => {
                 saveButton.textContent = originalButtonText;
+                saveButton.classList.remove('bg-gray-600', 'shadow-gray-200');
+                saveButton.classList.add('bg-gray-700', 'shadow-gray-300');
                 saveButton.disabled = false;
             }, 1500);
         }, 500);
     });
-
-    // --- LÓGICA PARA CAMBIAR TIPO DE USUARIO (PARA PRUEBAS) ---
-    const toggleUserTypeButton = document.getElementById('toggle-user-type-button');
-
-    // Actualizar el texto del botón según el tipo de usuario actual
-    const targetType = user.userType === 'operador' ? 'Externo' : 'Operador';
-    toggleUserTypeButton.textContent = `Convertir a ${targetType}`;
-
-    toggleUserTypeButton.addEventListener('click', () => {
-        // Determinar el nuevo tipo de usuario
-        const newUserType = user.userType === 'operador' ? 'externo' : 'operador';
-
-        // Crear el objeto de usuario actualizado
-        const updatedUser = {
-            ...user,
-            userType: newUserType
-        };
-
-        // Actualizar la lista de usuarios en localStorage
-        let users = JSON.parse(localStorage.getItem('users')) || [];
-        // Corregido: Usar el ID único para encontrar al usuario, igual que en la función de guardar.
-        const userIndex = users.findIndex(u => u.id === user.id);
-        if (userIndex !== -1) {
-            users[userIndex] = updatedUser;
-            localStorage.setItem('users', JSON.stringify(users));
-        }
-
-        // Actualizar la sesión actual y recargar la página para ver los cambios
-        sessionStorage.setItem('loggedInUser', JSON.stringify(updatedUser));
-        window.location.reload();
-    });
+    
+    // ------------------------------------------------------------------
+    // ELIMINADO: Lógica para el botón de cambio de tipo de usuario
+    // ------------------------------------------------------------------
 
     // --- LÓGICA DE CERRAR SESIÓN ---
-    const logoutButton = document.getElementById('logout-button');
     logoutButton.addEventListener('click', () => {
         sessionStorage.removeItem('loggedInUser');
         window.location.href = 'login.html';

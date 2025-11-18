@@ -1,5 +1,5 @@
-// --- MAIN INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Verificación de Usuario
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (!loggedInUser) {
         window.location.href = 'login.html';
@@ -8,21 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const user = JSON.parse(loggedInUser);
 
-    // Global variable to temporarily store the location of a new ping
+    // 2. Variables de Estado
     let newPingLatLng = null;
-    // Global variables for compare distances logic
     let isCompareMode = false;
     let selectedPins = [];
     let distancePolylines = [];
-    // Global variable to store report markers
-    let reportMarkers = {};
+    let reportMarkers = {}; // Necesario para gestionar los marcadores en deleteReport
 
-    // --- UI SETUP FUNCTIONS ---
+    // --- Funciones de Configuración de UI y Mapa ---
 
     function customizeMenu(user) {
         const userProfileButton = document.getElementById('user-profile-button');
         if (userProfileButton) {
-            // SECURITY: Use textContent to prevent XSS, although user.nombres is from a trusted source (sessionStorage).
             const userNameSpan = document.createElement('span');
             userNameSpan.className = 'font-medium';
             userNameSpan.textContent = user.nombres || 'Usuario';
@@ -51,8 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- MAP AND REPORT LOGIC ---
-
     function initMap() {
         const map = L.map('map', { zoomControl: false }).setView([6.099, -75.6367], 14.5);
         L.control.zoom({ position: 'bottomright' }).addTo(map);
@@ -76,6 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Funciones de Formularios ---
+
     function setupPingForm(map) {
         const formModal = document.getElementById('ping-form-modal');
         const pingForm = document.getElementById('ping-form');
@@ -84,19 +81,21 @@ document.addEventListener('DOMContentLoaded', () => {
         pingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
+            // Llama a reverseGeocode para obtener la dirección legible
             const ubicacionDisplay = await reverseGeocode(newPingLatLng.lat, newPingLatLng.lng);
 
             const reportData = {
                 id: Date.now(),
-                type: 'ping', // Differentiate between pings and full reports
+                type: 'ping',
                 nombre: document.getElementById('ping-nombre').value,
                 fecha: document.getElementById('ping-fecha').value,
                 hora: document.getElementById('ping-hora').value,
-                ubicacion_str: ubicacionDisplay, // Store human-readable string
+                // Usamos la dirección obtenida
+                ubicacion_str: ubicacionDisplay, 
                 descripcion: document.getElementById('ping-descripcion').value,
                 codigoUsuario: document.getElementById('ping-codigo-usuario').value,
-                userName: user.nombres, // Add user's name
-                userRole: user.userType, // Add user's role
+                userName: user.nombres,
+                userRole: user.userType,
                 lat: newPingLatLng.lat,
                 lng: newPingLatLng.lng
             };
@@ -140,6 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let lng = null;
 
             try {
+                // Geocodificación (conversión de dirección a coordenadas)
                 const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(ubicacionStr)}`);
                 const data = await response.json();
 
@@ -158,15 +158,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const reportData = {
                 id: Date.now(),
-                type: 'report', // Differentiate between pings and full reports
+                type: 'report',
                 nombre: document.getElementById('report-nombre').value,
                 fecha: document.getElementById('report-fecha').value,
                 hora: document.getElementById('report-hora').value,
                 ubicacion_str: ubicacionStr,
                 descripcion: document.getElementById('report-descripcion').value,
                 codigoUsuario: document.getElementById('report-codigo-usuario').value,
-                userName: user.nombres, // Add user's name
-                userRole: user.userType, // Add user's role
+                userName: user.nombres, 
+                userRole: user.userType,
                 lat: lat,
                 lng: lng
             };
@@ -184,11 +184,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Funciones de Reportes y Persistencia ---
+
     /**
-     * Creates the DOM element for the popup content in a secure way.
-     * @param {object} reportData - The data for the report.
-     * @param {object} user - The currently logged-in user.
-     * @returns {{popupElement: HTMLElement, deleteButton: HTMLElement|null}} - The popup container and the delete button if created.
+     * Crea el elemento DOM para el contenido del popup de forma segura.
+     * @param {object} reportData - Los datos para el reporte.
+     * @param {object} user - El usuario actualmente logueado.
+     * @returns {{popupElement: HTMLElement, deleteButton: HTMLElement|null}} 
      */
     function createPopupContent(reportData, user) {
         const container = document.createElement('div');
@@ -196,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const title = document.createElement('h3');
         title.className = 'font-bold text-lg';
-        title.textContent = reportData.nombre; // SECURITY: Use textContent to prevent XSS
+        title.textContent = reportData.nombre; 
 
         const dateTime = document.createElement('p');
         dateTime.className = 'my-1';
@@ -204,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         strongDate.className = 'font-semibold';
         strongDate.textContent = 'Fecha: ';
         dateTime.appendChild(strongDate);
-        dateTime.append(`${reportData.fecha} - ${reportData.hora}`); // Append as text
+        dateTime.append(`${reportData.fecha} - ${reportData.hora}`); 
 
         const location = document.createElement('p');
         location.className = 'my-1';
@@ -212,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
         strongLocation.className = 'font-semibold';
         strongLocation.textContent = 'Ubicación: ';
         location.appendChild(strongLocation);
-        location.append(reportData.ubicacion_str); // Append as text
+        location.append(reportData.ubicacion_str);
 
         const description = document.createElement('p');
         description.className = 'my-1';
@@ -220,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
         strongDesc.className = 'font-semibold';
         strongDesc.textContent = 'Descripción: ';
         description.appendChild(strongDesc);
-        description.append(reportData.descripcion); // Append as text
+        description.append(reportData.descripcion);
 
         const operatorId = document.createElement('p');
         operatorId.className = 'text-xs text-gray-500 mt-2';
@@ -246,12 +248,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const marker = L.marker([reportData.lat, reportData.lng]).addTo(map)
             .bindPopup(popupElement);
 
-        reportMarkers[reportData.id] = marker; // Store marker reference
+        reportMarkers[reportData.id] = marker; // Guardar referencia
 
-        // If a delete button was created, add the event listener safely on popup open.
         if (deleteButton) {
             marker.on('popupopen', () => {
-                // Re-query the button in the live DOM to ensure the listener is attached correctly.
                 const liveDeleteButton = popupElement.querySelector('button');
                 if (liveDeleteButton && !liveDeleteButton.hasAttribute('data-listener-attached')) {
                     liveDeleteButton.setAttribute('data-listener-attached', 'true');
@@ -269,8 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- DATA PERSISTENCE FUNCTIONS ---
-
     async function reverseGeocode(lat, lng) {
         try {
             const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`);
@@ -278,10 +276,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (data && data.display_name) {
                 return data.display_name;
             }
-            return `${lat.toFixed(5)}, ${lng.toFixed(5)}`; // Fallback to coordinates
+            return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
         } catch (error) {
             console.error('Error during reverse geocoding:', error);
-            return `${lat.toFixed(5)}, ${lng.toFixed(5)}`; // Fallback to coordinates on error
+            return `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
         }
     }
 
@@ -310,11 +308,12 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('reports', JSON.stringify(reports));
     }
 
-    // --- COMPARE DISTANCES LOGIC ---
+    // --- Funciones de Comparación de Distancias ---
+
     function setupCompareDistances(map) {
         const compareBtn = document.getElementById('compare-distances-btn');
         const clearBtn = document.getElementById('clear-distances-btn');
-        clearBtn.style.display = 'none'; // Ocultar botón al inicio
+        clearBtn.style.display = 'none'; 
 
         compareBtn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -322,13 +321,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (isCompareMode) {
                 compareBtn.classList.add('bg-slate-700');
-                clearBtn.style.display = 'flex'; // Mostrar botón
+                clearBtn.style.display = 'flex';
                 document.getElementById('map').style.cursor = 'crosshair';
-                // Close any open popups
                 map.closePopup();
             } else {
                 compareBtn.classList.remove('bg-slate-700');
-                clearBtn.style.display = 'none'; // Ocultar botón
+                clearBtn.style.display = 'none';
                 document.getElementById('map').style.cursor = '';
                 resetPinSelection(map);
             }
@@ -347,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const latlng1 = selectedPins[0].getLatLng();
             const latlng2 = selectedPins[1].getLatLng();
 
+            // Calcular distancia en metros usando la función integrada de Leaflet
             const distance = latlng1.distanceTo(latlng2);
 
             const polyline = L.polyline([latlng1, latlng2], {
@@ -362,9 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).openTooltip();
 
             distancePolylines.push(polyline);
-
-            // Reset for next comparison
-            selectedPins = [];
+            selectedPins = []; // Reiniciar la selección
         }
     }
 
@@ -376,15 +373,14 @@ document.addEventListener('DOMContentLoaded', () => {
         distancePolylines = [];
     }
 
-    // Initialize UI components
+    // --- Inicialización ---
     customizeMenu(user);
     setupSidebar();
 
-    // Initialize map and related functionalities
     const map = initMap();
     setupMapInteraction(map, user);
-    loadReports(map); // Load all reports (pings and full reports)
+    loadReports(map);
     setupPingForm(map);
-    setupReportForm(map, user); // Setup the new report form
+    setupReportForm(map, user); 
     setupCompareDistances(map);
 });

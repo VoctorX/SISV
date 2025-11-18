@@ -71,12 +71,10 @@ function setupReportDetailModal() {
             console.log('Report found:', report);
             
             if (report) {
-                // Llenar el modal con los datos del reporte - USANDO LOS NOMBRES CORRECTOS
                 document.getElementById('detail-report-nombre').textContent = report.nombre || 'Incidente sin nombre';
                 document.getElementById('detail-report-fecha').textContent = report.fecha || 'N/A';
                 document.getElementById('detail-report-hora').textContent = report.hora || 'N/A';
-                
-                // CORRECCIÓN: usar ubicacion_str en lugar de ubicacion
+            
                 document.getElementById('detail-report-ubicacion').textContent = report.ubicacion_str || report.ubicacion || 'No disponible';
                 document.getElementById('detail-report-lat').textContent = report.lat || 'N/A';
                 document.getElementById('detail-report-lng').textContent = report.lng || 'N/A';

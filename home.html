@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SISV MAPA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/js/home.js" asycn defer></script>
+    <script src="assets/js/home.js" async defer></script> 
     <link rel="stylesheet" href="assets/css/map.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body class="relative overflow-hidden">
-    <!-- Botón para abrir/cerrar el menú -->
     <button id="menu-toggle" class="fixed top-4 left-4 z-[1001] bg-white p-2 rounded-md shadow-lg text-gray-800 hover:bg-gray-100 transition-all">
         <svg id="menu-open-icon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -20,20 +19,14 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
     </button>
-
-    <!-- Menú Lateral -->
     <aside id="sidebar" class="fixed top-0 left-0 z-[1000] h-full w-72 bg-slate-800 text-slate-200 transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl">
         <div class="flex flex-col h-full p-6">
-            <!-- Cabecera del Menú -->
             <div class="p-2 mb-8">
                 <h2 class="text-3xl font-bold text-white border-b border-slate-700 pb-4 text-center">SISV</h2>
             </div>
-
-            <!-- CONTENEDOR QUE CENTRA LOS PRIMEROS 3 BOTONES -->
             <div class="flex flex-col justify-center flex-1 space-y-6">
 
                 <a href="#" id="generate-report-btn" class="flex items-center space-x-3 w-full px-6 py-4 text-slate-300 hover:bg-slate-700 rounded-lg transition-colors">
-                    <!-- icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
@@ -63,17 +56,12 @@
 
             </div>
 
-            <!-- BOTÓN DEL USUARIO (SE MANTIENE ABAJO) -->
             <a href="user.html" id="user-profile-button" class="flex items-center space-x-3 w-full px-4 py-3 bg-slate-900 rounded-lg hover:bg-slate-700/50 transition-colors mt-6">
-                <!-- contenido dinámico -->
-            </a>
-            </nav>
+                </a>
         </div>
     </aside>
 
     <div id="map" class="h-full w-full"></div>
-
-    <!-- Formulario para crear Reportes Detallados (Modal) -->
     <div id="report-form-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[1002] flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6">Generar Nuevo Reporte</h2>
@@ -113,8 +101,6 @@
             </form>
         </div>
     </div>
-
-    <!-- Formulario para crear Pings (Modal) -->
     <div id="ping-form-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[1002] flex items-center justify-center">
         <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
             <h2 class="text-2xl font-bold mb-6">Crear Nuevo Ping</h2>
