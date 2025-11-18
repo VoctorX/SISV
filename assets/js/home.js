@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('-translate-x-full');
-            menuToggle.classList.toggle('translate-x-64');
+            menuToggle.classList.toggle('translate-x-72');
             openIcon.classList.toggle('hidden');
             closeIcon.classList.toggle('hidden');
         });
