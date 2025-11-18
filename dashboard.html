@@ -10,7 +10,7 @@
 <body class="bg-white font-sans overflow-hidden">
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="w-64 bg-blue-50 p-4 flex flex-col items-center flex-shrink-0">
+        <div class="w-64 bg-gray-50 p-4 flex flex-col items-center flex-shrink-0">
             <div class="w-20 h-20 bg-white rounded-full border-2 border-gray-400 flex items-center justify-center mb-2 mt-6">
                 <svg class="w-12 h-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -22,14 +22,14 @@
             <div class="flex-grow"></div>
 
             <nav class="w-full space-y-2">
-                <a href="home.html" class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-3 rounded-lg transition">
+                <a href="home.html" class="flex items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-lg transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                     </svg>
                     <span class="font-medium">Página Principal</span>
                 </a>
                 
-                <a href="#" onclick="logout(event)" class="flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-3 rounded-lg transition">
+                <a href="#" onclick="logout(event)" class="flex items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-lg transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
@@ -47,7 +47,7 @@
 
                 <div class="relative">
                     <input type="text" id="searchAccident" placeholder="Buscar ID de Accidente"
-                        class="bg-blue-50 px-6 py-3 rounded-xl text-base w-80 border border-blue-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                        class="bg-gray-50 px-6 py-3 rounded-xl text-base w-80 border border-gray-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-400" />
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                 <!-- Left Column: Graph and Stats -->
                 <div class="flex-1 space-y-4">
                     <!-- Graph Card -->
-                    <div class="bg-blue-900 rounded-lg p-8 shadow-lg">
+                    <div class="bg-gray-600 rounded-lg p-8 shadow-lg">
                         <div style="height: 280px;">
                             <canvas id="accidentChart"></canvas>
                         </div>
@@ -64,11 +64,11 @@
 
                     <!-- Statistics Cards -->
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-blue-900 rounded-lg p-8 shadow-lg hover:shadow-xl transition cursor-pointer">
+                        <div class="bg-gray-500 rounded-lg p-8 shadow-lg hover:shadow-xl transition cursor-pointer">
                             <p class="text-5xl font-bold text-white">925</p>
                             <p class="text-white text-sm mt-2">Total víctimas 2024</p>
                         </div>
-                        <div class="bg-blue-900 rounded-lg p-8 shadow-lg hover:shadow-xl transition cursor-pointer">
+                        <div class="bg-gray-500 rounded-lg p-8 shadow-lg hover:shadow-xl transition cursor-pointer">
                             <p class="text-5xl font-bold text-white">161</p>
                             <p class="text-white text-sm mt-2">Fallecidos 2024</p>
                         </div>
@@ -76,12 +76,12 @@
                 </div>
 
                 <!-- Right Column: Incidents List -->
-                <div class="w-96 bg-blue-50 rounded-lg p-8 shadow-lg flex-shrink-0">
+                <div class="w-96 bg-gray-50 rounded-lg p-8 shadow-lg flex-shrink-0">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Incidentes Recientes</h2>
                     <div class="space-y-3" id="recent-incidents-list">
                         <p class="text-gray-600 text-sm">Cargando incidentes...</p>
                     </div>
-                    <a href="reports.html" class="text-sm text-blue-700 hover:underline mt-4 inline-block font-semibold">Ver todos los accidentes...</a>
+                    <a href="#" class="text-sm text-gray-700 hover:underline mt-4 inline-block font-semibold">Ver todos los accidentes...</a>
                 </div>
             </div>
         </div>
@@ -89,38 +89,49 @@
 
     <!-- Modal para mostrar detalles del reporte -->
     <div id="report-detail-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[1002] flex items-center justify-center opacity-0 transition-opacity duration-300 ease-out">
-        <div class="bg-blue-50 p-8 rounded-lg shadow-xl w-full max-w-md transform opacity-0 scale-95 transition-all duration-300 ease-out border border-blue-200 max-h-[90vh] overflow-y-auto">
-            <h2 id="detail-report-nombre" class="text-2xl font-bold mb-4 text-gray-800">Detalles del Incidente</h2>
-            <div class="space-y-2 text-gray-700 text-sm">
-                <div class="border-b pb-2">
-                    <p class="font-semibold text-gray-800 mb-1">Información del Incidente</p>
+        <div class="bg-gray-800/90 p-8 rounded-lg shadow-xl w-full max-w-md transform opacity-0 scale-95 transition-all duration-300 ease-out border border-gray-700 max-h-[90vh] overflow-y-auto text-base">
+
+            <h2 id="detail-report-nombre" class="text-3xl font-bold mb-4 text-gray-100 text-center">
+                Detalles del Incidente
+            </h2>
+
+            <div class="space-y-2 text-gray-200">
+
+                <div class="border-b border-gray-600 pb-2">
+                    <p class="font-semibold text-gray-100 mb-1 text-center text-lg">Información del Incidente</p>
                     <p><strong>Fecha:</strong> <span id="detail-report-fecha">-</span></p>
                     <p><strong>Hora:</strong> <span id="detail-report-hora">-</span></p>
                 </div>
-                
-                <div class="border-b pb-2">
-                    <p class="font-semibold text-gray-800 mb-1">Ubicación</p>
+
+                <div class="border-b border-gray-600 pb-2">
+                    <p class="font-semibold text-gray-100 mb-1 text-center text-lg">Ubicación</p>
                     <p><strong>Dirección:</strong> <span id="detail-report-ubicacion">-</span></p>
                     <p><strong>Latitud:</strong> <span id="detail-report-lat">-</span></p>
                     <p><strong>Longitud:</strong> <span id="detail-report-lng">-</span></p>
                 </div>
-                
-                <div class="border-b pb-2">
-                    <p class="font-semibold text-gray-800 mb-1">Descripción</p>
-                    <p id="detail-report-descripcion" class="text-gray-700">-</p>
+
+                <div class="border-b border-gray-600 pb-2">
+                    <p class="font-semibold text-gray-100 mb-1 text-center text-lg">Descripción</p>
+                    <p id="detail-report-descripcion">-</p>
                 </div>
-                
+
                 <div>
-                    <p class="font-semibold text-gray-800 mb-1">Datos del Operador</p>
+                    <p class="font-semibold text-gray-100 mb-1 text-center text-lg">Datos del Operador</p>
                     <p><strong>Nombre:</strong> <span id="detail-report-nombre-usuario">-</span></p>
                     <p><strong>Rol:</strong> <span id="detail-report-rol-usuario">-</span></p>
                     <p><strong>Código:</strong> <span id="detail-report-codigo-usuario">-</span></p>
                 </div>
+
             </div>
+
             <div class="flex justify-end mt-6 gap-2">
-                <button type="button" id="close-report-detail-modal" class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Cerrar</button>
+                <button type="button" id="close-report-detail-modal" class="px-6 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition">
+                    Cerrar
+                </button>
             </div>
+
         </div>
+
     </div>
 
     <script src="assets/js/dashboard.js" defer></script>

@@ -119,7 +119,7 @@ function renderRecentIncidents(incidents, containerElement) {
 
     incidents.forEach(incident => {
         const incidentElement = document.createElement('div');
-        incidentElement.className = 'flex items-center space-x-3 text-gray-700 hover:bg-blue-100 p-2 rounded transition cursor-pointer incident-item';
+        incidentElement.className = 'flex items-center space-x-3 text-gray-700 hover:bg-gray-100 p-2 rounded transition cursor-pointer incident-item';
         
         // Solo guardamos el ID
         incidentElement.setAttribute('data-report-id', incident.id);
@@ -198,16 +198,16 @@ function createAccidentChart() {
             datasets: [{
                 label: 'Víctimas Totales',
                 data: realData,
-                borderColor: '#60A5FA',
-                backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                borderColor: '#9CA3AF',
+                backgroundColor: 'rgba(156, 163, 175, 0.1)',
                 tension: 0.4,
                 borderWidth: 3,
                 pointRadius: 5,
                 pointHoverRadius: 8,
-                pointBackgroundColor: '#60A5FA',
+                pointBackgroundColor: '#9CA3AF',
                 pointBorderColor: '#fff',
                 pointBorderWidth: 2,
-                pointHoverBackgroundColor: '#3B82F6',
+                pointHoverBackgroundColor: '#6B7280',
                 pointHoverBorderColor: '#fff',
                 fill: true
             }]
@@ -228,7 +228,7 @@ function createAccidentChart() {
                     backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     titleColor: '#fff',
                     bodyColor: '#fff',
-                    borderColor: '#60A5FA',
+                    borderColor: '#9CA3AF',
                     borderWidth: 1,
                     padding: 12,
                     displayColors: false,
