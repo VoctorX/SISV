@@ -234,14 +234,9 @@ document.addEventListener('DOMContentLoaded', () => {
         reportMarkers[reportData.id] = marker;
 
         if (deleteButton) {
-            marker.on('popupopen', () => {
-                const liveDeleteButton = popupElement.querySelector('button');
-                if (liveDeleteButton && !liveDeleteButton.hasAttribute('data-listener-attached')) {
-                    liveDeleteButton.setAttribute('data-listener-attached', 'true');
-                    liveDeleteButton.addEventListener('click', () => {
-                        deleteReport(reportData.id, map);
-                    });
-                }
+            deleteButton.addEventListener('click', () => {
+                deleteReport(reportData.id, map);
+                marker.closePopup();
             });
         }
 

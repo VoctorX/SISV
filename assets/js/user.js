@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const codigoInternoInput = document.getElementById('user-codigo-interno');
     const sexoInput = document.getElementById('user-sexo');
-    consrgoInput = document.getElementById('user-idcargo');
+    const idCargoInput = document.getElementById('user-idcargo');
+    const edadInput = document.getElementById('user-edad');
 
 
     profileCard.classList.add('animate-fade-in-slide-up');

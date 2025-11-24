@@ -1,47 +1,40 @@
-// --- SECURITY WARNING ---
-// THIS PROTOTYPE USES localStorage AND STORES PASSWORDS IN PLAIN TEXT.
-// THIS IS EXTREMELY INSECURE AND MUST NOT BE USED IN A PRODUCTION ENVIRONMENT.
-// For a real application, use a secure backend with password hashing (e.g., bcrypt).
-
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('loginForm').classList.remove('hidden');
     document.getElementById('signupForm').classList.add('hidden');
-
-    // --- DOM ELEMENT REFERENCES ---
     const signupFormElement = document.querySelector('#signupForm form');
     const loginFormElement = document.querySelector('#loginForm form');
     const operatorFields = document.getElementById('operator-fields');
     const userTypeRadios = document.querySelectorAll('input[name="userType"]');
-
-    // --- EVENT LISTENERS ---
-
-    // Toggle operator fields visibility based on user type selection
+    
     userTypeRadios.forEach(radio => {
-        radio.addEventListener('change', (event) => {
-            if (event.target.value === 'operador') {
-                operatorFields.classList.remove('hidden');
-            } else {
-                operatorFields.classList.add('hidden');
-            }
-        });
+    radio.addEventListener('change', (event) => {
+        if (event.target.value === 'operador') {
+            operatorFields.classList.remove('hidden');
+        } else {
+            operatorFields.classList.add('hidden');
+            document.getElementById('signup-codigo-interno').value = '';
+            document.getElementById('signup-sexo').value = '';
+            document.getElementById('signup-edad').value = '';
+            document.getElementById('signup-idcargo').value = '1';
+        }
     });
+});
 
-    // --- SIGN UP LOGIC ---
     signupFormElement.addEventListener('submit', function(event) {
         event.preventDefault();
 
         const name = document.getElementById('signup-name').value.trim();
-        const id = document.getElementById('signup-id').value.trim(); // Get cedula value
+        const id = document.getElementById('signup-id').value.trim();
         const email = document.getElementById('signup-email').value.trim();
         const password = document.getElementById('signup-password').value.trim();
 
-        if (!email || !password || !name || !id) { // Add cedula to validation
+        if (!email || !password || !name || !id) { 
             alert('Por favor, completa todos los campos para registrarte.');
             return;
         }
 
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        const userExists = users.some(user => user.email === email || user.id === id); // Check for existing cedula
+        const userExists = users.some(user => user.email === email || user.id === id); 
 
         if (userExists) {
             alert('Este correo electrónico o cédula ya está registrado. Por favor, inicia sesión.');
@@ -76,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
         signupFormElement.reset();
-        operatorFields.style.display = 'none';
         showLogin();
     });
 
