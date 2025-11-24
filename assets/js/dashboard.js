@@ -1,37 +1,26 @@
-// --- VERIFICACIÓN DE SESIÓN Y PERSONALIZACIÓN DEL DASHBOARD ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Verificar si el usuario ha iniciado sesión
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (!loggedInUser) {
         window.location.href = 'login.html';
         return;
     }
-
-    // Parsear datos del usuario y actualizar interfaz
     const user = JSON.parse(loggedInUser);
     const userName = user.nombres || user.name || 'Usuario';
 
     document.getElementById('userNameSidebar').textContent = userName;
     document.getElementById('welcomeMessage').textContent = `Bienvenido, ${userName}`;
 
-    // Cargar incidentes recientes
     loadAndDisplayRecentIncidents();
-
-    // Configurar modal de detalles
     setupReportDetailModal();
-
-    // Crear gráfica
     createAccidentChart();
 });
 
-// --- FUNCIÓN PARA CERRAR SESIÓN ---
 function logout(event) {
     event.preventDefault();
     sessionStorage.removeItem('loggedInUser');
     window.location.href = 'login.html';
 }
 
-// --- CONFIGURACIÓN DEL MODAL DE DETALLES ---
 function setupReportDetailModal() {
     const reportDetailModal = document.getElementById('report-detail-modal');
     const reportDetailModalContent = reportDetailModal.querySelector('div:first-child');
@@ -39,7 +28,7 @@ function setupReportDetailModal() {
 
     function showReportDetailModal() {
         reportDetailModal.classList.remove('hidden');
-        reportDetailModal.offsetHeight; // Force reflow
+        reportDetailModal.offsetHeight;
         reportDetailModal.classList.add('opacity-100');
         reportDetailModal.classList.remove('opacity-0');
         reportDetailModalContent.classList.add('opacity-100', 'scale-100');
@@ -56,16 +45,14 @@ function setupReportDetailModal() {
         }, 300);
     }
 
-    // Event listener para abrir modal al hacer clic en un incidente
+
     document.getElementById('recent-incidents-list').addEventListener('click', (event) => {
         const incidentItem = event.target.closest('.incident-item');
         if (incidentItem) {
-            // Obtener el ID del reporte
             const reportId = incidentItem.dataset.reportId;
             
-            // Buscar el reporte completo en localStorage
             const allReports = JSON.parse(localStorage.getItem('reports')) || [];
-            const report = allReports.find(r => r.id == reportId); // Usar == para comparación flexible
+            const report = allReports.find(r => r.id == reportId); 
             
             console.log('Report ID:', reportId);
             console.log('Report found:', report);
@@ -78,12 +65,10 @@ function setupReportDetailModal() {
                 document.getElementById('detail-report-ubicacion').textContent = report.ubicacion_str || report.ubicacion || 'No disponible';
                 document.getElementById('detail-report-lat').textContent = report.lat || 'N/A';
                 document.getElementById('detail-report-lng').textContent = report.lng || 'N/A';
-                
-                // ubicacionDetallada puede que no exista en tu estructura
+
             
                 document.getElementById('detail-report-descripcion').textContent = report.descripcion || 'Sin descripción';
                 
-                // CORRECCIÓN: usar userName y userRole en lugar de nombreUsuario y rolUsuario
                 document.getElementById('detail-report-nombre-usuario').textContent = report.userName || 'No disponible';
                 document.getElementById('detail-report-rol-usuario').textContent = report.userRole || 'No disponible';
                 document.getElementById('detail-report-codigo-usuario').textContent = report.codigoUsuario || 'N/A';
@@ -98,7 +83,6 @@ function setupReportDetailModal() {
 
     closeReportDetailModal.addEventListener('click', hideReportDetailModal);
 
-    // Cerrar modal al hacer clic fuera del contenido
     reportDetailModal.addEventListener('click', (event) => {
         if (event.target === reportDetailModal) {
             hideReportDetailModal();
@@ -106,7 +90,6 @@ function setupReportDetailModal() {
     });
 }
 
-// --- FUNCIONES PARA CARGAR Y MOSTRAR INCIDENTES RECIENTES ---
 function renderRecentIncidents(incidents, containerElement) {
     containerElement.innerHTML = '';
 
@@ -118,8 +101,7 @@ function renderRecentIncidents(incidents, containerElement) {
     incidents.forEach(incident => {
         const incidentElement = document.createElement('div');
         incidentElement.className = 'flex items-center space-x-3 text-gray-700 hover:bg-gray-100 p-2 rounded transition cursor-pointer incident-item';
-        
-        // Solo guardamos el ID
+
         incidentElement.setAttribute('data-report-id', incident.id);
         
         incidentElement.innerHTML = `
@@ -142,21 +124,17 @@ function loadAndDisplayRecentIncidents() {
     const allReports = JSON.parse(localStorage.getItem('reports')) || [];
     
     console.log('Total reports in localStorage:', allReports.length);
-
-    // Ordenar reportes por fecha y hora, más recientes primero
     allReports.sort((a, b) => {
         const dateTimeA = new Date(`${a.fecha}T${a.hora || '00:00'}`);
         const dateTimeB = new Date(`${b.fecha}T${b.hora || '00:00'}`);
         return dateTimeB - dateTimeA;
     });
 
-    // Tomar los 6 incidentes más recientes
     const recentIncidents = allReports.slice(0, 6);
-
     renderRecentIncidents(recentIncidents, recentIncidentsContainer);
 }
 
-// --- FUNCIÓN MATEMÁTICA PARA LA GRÁFICA ---
+// --- Integracion del  ---
 function f(x) {
     return 0.0001492855139 * Math.pow(x, 11)
         - 0.0107930996473 * Math.pow(x, 10)
@@ -171,8 +149,6 @@ function f(x) {
         + 39681.36854256854 * x
         - 13652;
 }
-
-// --- CREAR GRÁFICA DE ACCIDENTES ---
 function createAccidentChart() {
     const canvas = document.getElementById('accidentChart');
     if (!canvas) {
@@ -180,7 +156,6 @@ function createAccidentChart() {
         return;
     }
 
-    // Generar datos usando la función para cada mes
     const realData = [];
     for (let i = 1; i <= 12; i++) {
         realData.push(Math.round(f(i)));

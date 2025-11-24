@@ -9,7 +9,6 @@
 </head>
 <body class="bg-white font-sans overflow-hidden">
     <div class="flex h-screen">
-        <!-- Sidebar -->
         <div class="w-64 bg-gray-50 p-4 flex flex-col items-center flex-shrink-0">
             <div class="w-20 h-20 bg-white rounded-full border-2 border-gray-400 flex items-center justify-center mb-2 mt-6">
                 <svg class="w-12 h-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,8 +36,6 @@
                 </a>
             </nav>
         </div>
-
-        <!-- Main Content -->
         <div class="flex-1 p-8 overflow-auto flex flex-col">
             <div class="flex justify-between items-center mb-4 mt-6 py-2 px-2">
                 <h1 id="welcomeMessage" class="text-3xl font-semibold text-gray-800 tracking-wide">
@@ -52,9 +49,7 @@
             </div>
 
             <div class="flex gap-6 max-w-7xl mt-10">
-                <!-- Left Column: Graph and Stats -->
                 <div class="flex-1 space-y-4">
-                    <!-- Graph Card -->
                     <div class="bg-gray-600 rounded-lg p-8 shadow-lg">
                         <div style="height: 280px;">
                             <canvas id="accidentChart"></canvas>
@@ -62,7 +57,6 @@
                         <p class="text-white text-sm mt-4">Siniestros Viales en Caldas 2024</p>
                     </div>
 
-                    <!-- Statistics Cards -->
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-gray-500 rounded-lg p-8 shadow-lg hover:shadow-xl transition cursor-pointer">
                             <p class="text-5xl font-bold text-white">925</p>
@@ -74,8 +68,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Right Column: Incidents List -->
                 <div class="w-96 bg-gray-50 rounded-lg p-8 shadow-lg flex-shrink-0">
                     <h2 class="text-lg font-semibold text-gray-800 mb-4">Incidentes Recientes</h2>
                     <div class="space-y-3" id="recent-incidents-list">
@@ -87,7 +79,6 @@
         </div>
     </div>  
 
-    <!-- Modal para mostrar detalles del reporte -->
     <div id="report-detail-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-[1002] flex items-center justify-center opacity-0 transition-opacity duration-300 ease-out">
         <div class="bg-gray-800/90 p-8 rounded-lg shadow-xl w-full max-w-md transform opacity-0 scale-95 transition-all duration-300 ease-out border border-gray-700 max-h-[90vh] overflow-y-auto text-base">
 

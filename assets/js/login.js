@@ -49,14 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const userType = document.querySelector('input[name="userType"]:checked').value;
-
-        // Create a base user object
         const newUser = {
-            id: id, // Use cedula as the ID
+            id: id,
             nombres: name,
             apellidos: '',
             email: email,
-            password: password, // INSECURE: Storing plain text password
+            password: password, 
             celular: '',
             nit: '',
             userType: userType,
@@ -66,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
             idcargo: ''
         };
 
-        // If the user is an 'operador', add the specific fields
         if (userType === 'operador') {
             newUser.codigo_interno = document.getElementById('signup-codigo-interno').value.trim();
             newUser.sexo = document.getElementById('signup-sexo').value.trim();
@@ -75,18 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         users.push(newUser);
-        // --- SECURITY WARNING ---
-        // Storing user data, including the plain text password, in localStorage.
-        // This is for prototype purposes only. DO NOT DO THIS IN PRODUCTION.
         localStorage.setItem('users', JSON.stringify(users));
 
         alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
         signupFormElement.reset();
-        operatorFields.style.display = 'none'; // Hide operator fields after reset
+        operatorFields.style.display = 'none';
         showLogin();
     });
 
-    // --- LOGIN LOGIC ---
     loginFormElement.addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -105,13 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const users = JSON.parse(localStorage.getItem('users')) || [];
-        // --- SECURITY WARNING ---
-        // Comparing plain text passwords. This is insecure.
         const foundUser = users.find(user => user.email === email && user.password === password);
 
         if (foundUser) {
             alert('¡Inicio de sesión exitoso!');
-            // Store user data in sessionStorage for the current session
             sessionStorage.setItem('loggedInUser', JSON.stringify(foundUser));
             window.location.href = 'home.html';
         } else {
@@ -120,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
  
-// --- FUNCIONES PARA ALTERNAR LA VISIBILIDAD DE LOS FORMULARIOS ---
 function showLogin(event) {
     if (event) event.preventDefault(); 
     document.getElementById('loginForm').style.display = 'block';

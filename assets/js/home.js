@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Verificación de Usuario
     const loggedInUser = sessionStorage.getItem('loggedInUser');
     if (!loggedInUser) {
         window.location.href = 'login.html';
@@ -8,14 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const user = JSON.parse(loggedInUser);
 
-    // 2. Variables de Estado
     let newPingLatLng = null;
     let isCompareMode = false;
     let selectedPins = [];
     let distancePolylines = [];
-    let reportMarkers = {}; // Necesario para gestionar los marcadores en deleteReport
+    let reportMarkers = {};
 
-    // --- Funciones de Configuración de UI y Mapa ---
 
     function customizeMenu(user) {
         const userProfileButton = document.getElementById('user-profile-button');
@@ -70,9 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
-    // --- Funciones de Formularios ---
-
     function setupPingForm(map) {
         const formModal = document.getElementById('ping-form-modal');
         const pingForm = document.getElementById('ping-form');
@@ -80,8 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // Llama a reverseGeocode para obtener la dirección legible
             const ubicacionDisplay = await reverseGeocode(newPingLatLng.lat, newPingLatLng.lng);
 
             const reportData = {
@@ -90,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 nombre: document.getElementById('ping-nombre').value,
                 fecha: document.getElementById('ping-fecha').value,
                 hora: document.getElementById('ping-hora').value,
-                // Usamos la dirección obtenida
+             
                 ubicacion_str: ubicacionDisplay, 
                 descripcion: document.getElementById('ping-descripcion').value,
                 codigoUsuario: document.getElementById('ping-codigo-usuario').value,
@@ -139,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let lng = null;
 
             try {
-                // Geocodificación (conversión de dirección a coordenadas)
                 const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(ubicacionStr)}`);
                 const data = await response.json();
 
@@ -184,14 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Funciones de Reportes y Persistencia ---
-
-    /**
-     * Crea el elemento DOM para el contenido del popup de forma segura.
-     * @param {object} reportData - Los datos para el reporte.
-     * @param {object} user - El usuario actualmente logueado.
-     * @returns {{popupElement: HTMLElement, deleteButton: HTMLElement|null}} 
-     */
     function createPopupContent(reportData, user) {
         const container = document.createElement('div');
         container.className = 'font-sans';
@@ -248,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const marker = L.marker([reportData.lat, reportData.lng]).addTo(map)
             .bindPopup(popupElement);
 
-        reportMarkers[reportData.id] = marker; // Guardar referencia
+        reportMarkers[reportData.id] = marker;
 
         if (deleteButton) {
             marker.on('popupopen', () => {
@@ -308,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('reports', JSON.stringify(reports));
     }
 
-    // --- Funciones de Comparación de Distancias ---
 
     function setupCompareDistances(map) {
         const compareBtn = document.getElementById('compare-distances-btn');
@@ -345,7 +327,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const latlng1 = selectedPins[0].getLatLng();
             const latlng2 = selectedPins[1].getLatLng();
 
-            // Calcular distancia en metros usando la función integrada de Leaflet
             const distance = latlng1.distanceTo(latlng2);
 
             const polyline = L.polyline([latlng1, latlng2], {
@@ -361,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }).openTooltip();
 
             distancePolylines.push(polyline);
-            selectedPins = []; // Reiniciar la selección
+            selectedPins = [];
         }
     }
 
@@ -373,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
         distancePolylines = [];
     }
 
-    // --- Inicialización ---
     customizeMenu(user);
     setupSidebar();
 
